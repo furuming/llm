@@ -1,0 +1,47 @@
+services:
+  web:
+    image: caddy:latest
+    ports:
+      - 8080:8080
+    volumes:
+      - ./.docker/caddy/Caddyfile:/etc/caddy/Caddyfile
+#      - ./.docker/caddy/data:/data
+#      - ./.docker/caddy/config:/config
+  backend:
+    build:
+      context: ../llm_backend
+    ports:
+      - 9000:9000
+    tty: true
+    # volumes:
+    #   - ./voice_transcription_backend:/app:rw
+
+  frontend:
+    build:
+      context: ../llm_frontend
+    tty: true
+    ports:
+      - 13000:3000
+    # volumes:
+    #   - ./voice_transcription_frontend:/var/www/frontend:rw
+  # core:
+  #   build:
+  #     context: ./voice_transcription_core
+  #   tty: true
+  #   volumes:
+  #     - ./voice_transcription_core:/app:rw
+  #     - ./data:/data
+  db:
+    image: mysql:latest
+    ports:
+      - 13306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=myapp
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+    volumes:
+      - ./.docker/mysql/data:/var/lib/mysql
+    
+
+  
