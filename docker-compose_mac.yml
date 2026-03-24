@@ -31,6 +31,13 @@ services:
   #   volumes:
   #     - ./voice_transcription_core:/app:rw
   #     - ./data:/data
+  rag:
+    build:
+      context: ../llm_rag
+      dockerfile: dockerfile
+    volumes:
+      - ./data:/work/data
+    tty: true
   db:
     image: mysql:latest
     ports:
