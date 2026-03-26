@@ -31,13 +31,13 @@ services:
   #   volumes:
   #     - ./voice_transcription_core:/app:rw
   #     - ./data:/data
-  rag:
-    build:
-      context: ../llm_rag
-      dockerfile: dockerfile
-    volumes:
-      - ./data:/work/data
-    tty: true
+  # rag:
+  #   build:
+  #     context: ../llm_rag
+  #     dockerfile: dockerfile
+  #   volumes:
+  #     - ./data:/work/data
+  #   tty: true
   db:
     image: mysql:latest
     ports:
@@ -49,6 +49,24 @@ services:
       - MYSQL_PASSWORD=password
     volumes:
       - ./.docker/mysql/data:/var/lib/mysql
-    
+  vdb:
+    image: qdrant/qdrant:latest
+    ports:
+      - 6333:6333
+      - 6334:6334
+    volumes:
+      - ./.docker/qdrant/storage:/qdrant/storage
+      - ./.docker/qdrant/snapshots:/qdrant/snapshots
+      - ./.docker/qdrant/config/production.yaml:/qdrant/config/production.yaml:ro
 
-  
+  vdb-init:
+    image: curlimages/curl:8.10.1
+    depends_on:
+      - vdb
+    environment:
+      - QDRANT_URL=http://vdb:6333
+    volumes:
+      - ./.docker/qdrant/collections:/collections:ro
+      - ./.docker/qdrant/scripts:/scripts:ro
+    entrypoint: ["/bin/sh", "/scripts/apply-collections.sh"]
+    restart: "no"

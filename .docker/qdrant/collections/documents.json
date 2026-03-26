@@ -1,0 +1,9 @@
+{
+  "vectors": {
+    "size": 1536,
+    "distance": "Cosine"
+  },
+  "metadata": {
+    "description": "Default collection for RAG documents"
+  }
+}

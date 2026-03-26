@@ -1,0 +1,12 @@
+{
+  "vectors": {
+    "size": 1024,
+    "distance": "Cosine"
+  },
+  "sparse_vectors": {
+    "sparse": {}
+  },
+  "metadata": {
+    "description": "Default hybrid collection for RAG documents with BGE-M3"
+  }
+}

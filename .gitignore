@@ -1,1 +1,5 @@
 .docker/mysql/data/*
+.docker/qdrant/storage/*
+.docker/qdrant/snapshots/*
+data/*
+.DS_Store

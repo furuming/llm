@@ -1,0 +1,5 @@
+log_level: INFO
+
+storage:
+  storage_path: /qdrant/storage
+  snapshots_path: /qdrant/snapshots
