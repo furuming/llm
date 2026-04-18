@@ -13,6 +13,10 @@ services:
     ports:
       - 19000:9000
     tty: true
+    depends_on:
+      - core
+    environment:
+      - LOCAL_LLM_BASE_URL=http://core:9000
     # volumes:
     #   - ./voice_transcription_backend:/app:rw
 
@@ -27,11 +31,34 @@ services:
   core:
     build:
       context: ../llm_core
+      dockerfile: dockerfile.rocm
     tty: true
+    ports:
+      - 19001:9000
+    devices:
+      - /dev/dxg:/dev/dxg
+    group_add:
+      - video
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp=unconfined
+    ipc: host
+    shm_size: 8g
     volumes:
       - ./data:/data
-    environment:
-      - GPU=NVIDIA
+      - type: bind
+        source: /usr/lib/wsl/lib/libdxcore.so
+        target: /usr/lib/libdxcore.so
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: /opt/rocm/lib/libhsa-runtime64.so.1
+        target: /opt/rocm/lib/libhsa-runtime64.so.1
+        read_only: true
+        bind:
+          create_host_path: false
   # rag:
   #   build:
   #     context: ../llm_rag
