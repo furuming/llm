@@ -12,33 +12,28 @@ services:
       context: ../llm_backend
     ports:
       - 19000:9000
-    tty: true
-    # volumes:
-    #   - ./voice_transcription_backend:/app:rw
+    restart: unless-stopped
+    volumes:
+      - ../llm_backend:/app:rw
+    environment:
+      - LOCAL_LLM_BASE_URL=http://core:9000
 
   frontend:
     build:
       context: ../llm_frontend
-    tty: true
     ports:
       - 13000:3000
-    # volumes:
-    #   - ./voice_transcription_frontend:/var/www/frontend:rw
+    restart: unless-stopped
+    volumes:
+      - ../llm_frontend:/var/www/frontend:rw
   core:
     build:
       context: ../llm_core
-    tty: true
+    restart: unless-stopped
     volumes:
       - ./data:/data
     environment:
       - GPU=NVIDIA
-  # rag:
-  #   build:
-  #     context: ../llm_rag
-  #     dockerfile: dockerfile
-  #   volumes:
-  #     - ./data:/work/data
-  #   tty: true
   db:
     image: mysql:latest
     ports:
