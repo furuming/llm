@@ -5,7 +5,7 @@ def create_router( container:Container )->FastAPI:
     
     app = FastAPI()
 
-    app.add_api_route(path="/auth", endpoint=container.auth_controller.test)
+    app.add_api_route(path="/auth", endpoint=container.auth_controller.test, methods=["GET"])
     
     
     return app
