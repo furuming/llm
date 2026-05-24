@@ -13,18 +13,16 @@ class UserModel(Base):
     name: Mapped[str] = mapped_column(String(100), nullable=False)
     password: Mapped[str] = mapped_column(String(50), nullable=False)
     email: Mapped[str] = mapped_column(String(255), nullable=False)
-    email_velified_at: Mapped[datetime] = mapped_column(
+    email_verified_at: Mapped[datetime] = mapped_column(
         DateTime,
         server_default=func.now(),
         nullable=True,
     )
     created_at: Mapped[datetime] = mapped_column(
         DateTime,
-        server_default=func.now(),
         nullable=False,
     )
     updated_at: Mapped[datetime] = mapped_column(
         DateTime,
-        server_default=func.now(),
         nullable=False,
     )
