@@ -38,10 +38,10 @@ services:
   db:
     image: mysql:latest
     ports:
-      - 13306:3306
+      - 3306:3306
     environment:
       - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_DATABASE=myapp
+      - MYSQL_DATABASE=llm
       - MYSQL_USER=user
       - MYSQL_PASSWORD=password
     volumes:
