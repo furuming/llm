@@ -9,12 +9,13 @@ services:
 #      - ./.docker/caddy/config:/config
   backend:
     build:
-      context: ../llm_backend
+      context: ./backend
     ports:
       - 19000:9000
     restart: unless-stopped
     volumes:
-      - ../llm_backend:/app:rw
+      - ./backend:/app:rw
+    tty: true
     environment:
       - LOCAL_LLM_BASE_URL=http://core:9000
 

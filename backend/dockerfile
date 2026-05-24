@@ -1,0 +1,25 @@
+FROM python:3.14
+
+WORKDIR /app
+
+ENV PATH="/root/.local/bin:/root/.npm-global/bin:${PATH}"
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends curl ca-certificates gnupg \
+    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends nodejs \
+    && npm install -g @llamaindex/liteparse \
+    && curl -LsSf https://astral.sh/uv/install.sh | sh \
+    && rm -rf /var/lib/apt/lists/*
+
+
+
+# uvインストール
+# RUN pip install uv
+
+# COPY pyproject.toml uv.lock ./
+
+# RUN uv sync --system
+
+# CMD ["uvicorn", "src.main:app", "--reload", "--host", "0.0.0.0" ]
