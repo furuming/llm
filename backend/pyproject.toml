@@ -11,4 +11,5 @@ dependencies = [
     "pydantic-settings>=2.14.1",
     "pymysql>=1.2.0",
     "uvicorn>=0.47.0",
+    "bcrypt>=5.0.0",
 ]

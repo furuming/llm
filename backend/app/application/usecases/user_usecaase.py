@@ -5,5 +5,6 @@ class UserUsecase:
     def __init__(self):
         pass
 
-    def register_user(self):
+    def register_user(self, name:str, email:str, password:str):
+        
         pass

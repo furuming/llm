@@ -1,10 +1,12 @@
 from app.presentation.schema.requests.user_request import CreateUserRequest
 from app.presentation.schema.responses.user_response import CreateUserResponse
 
+from app.application.usecases.user_usecaase import UserUsecase
+
 
 class AuthController:
-    def __init__(self):
-        pass
+    def __init__(self, user_usecase:UserUsecase):
+        self.user_usecase = user_usecase
 
     async def test(self)->str:
         print("test")
@@ -12,6 +14,9 @@ class AuthController:
     
     async def create(self, request: CreateUserRequest) -> CreateUserResponse:
         print(f"register name={request.name}, email={request.email}, password={request.password}")
+
+        self.user_usecase.register_user()
+
 
         return CreateUserResponse(
             name=request.name,
