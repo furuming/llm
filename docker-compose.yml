@@ -21,20 +21,21 @@ services:
 
   frontend:
     build:
-      context: ../llm_frontend
+      context: ./frontend
     ports:
       - 13000:3000
     restart: unless-stopped
+    tty: true
     volumes:
-      - ../llm_frontend:/var/www/frontend:rw
-  core:
-    build:
-      context: ../llm_core
-    restart: unless-stopped
-    volumes:
-      - ./data:/data
-    environment:
-      - GPU=NVIDIA
+      - ./frontend:/var/www/frontend:rw
+  # core:
+  #   build:
+  #     context: ../llm_core
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ./data:/data
+  #   environment:
+  #     - GPU=NVIDIA
   db:
     image: mysql:latest
     ports:
