@@ -6,3 +6,5 @@ class Container:
 
     def get_controller_auth(self)->AuthController:
         return self.auth_controller
+    
+    
