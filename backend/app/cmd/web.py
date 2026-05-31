@@ -3,21 +3,11 @@ from app.cmd.api.router import create_router
 from app.cmd.di.container import Container
 from app.shared.config import Settings
 
-
-
-def main():
+def create_app( settings: Settings ):
     """webサーバーを起動する"""
-    print("start app")
-
-    settings = Settings()
-    print(settings.APP_PORT)
-
-    container = Container()
+    container = Container(settings)
     app = create_router(container)
+    return app
 
-    uvicorn.run(app, port=settings.APP_PORT, log_level="info" )
-
-
-
-if __name__ == "__main__":
-    main()
+settings = Settings()
+app = create_app(settings)

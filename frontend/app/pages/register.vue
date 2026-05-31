@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { consoleError } from 'vuetify/lib/util/console.mjs'
+
 
 const name = ref("")
 const email = ref("")
@@ -6,8 +8,8 @@ const password = ref("")
 const password_confirm = ref("")
 
 
-const registerUser = () => {
-    const ret = $fetch("/api/users/register", {
+const registerUser = async () => {
+    const ret = await $fetch("/api/users/register", {
         method: "POST",
         body: {
             name: name.value,
@@ -15,6 +17,7 @@ const registerUser = () => {
             password: password.value,
         }
     })
+    console.log(ret)
 
 }
 
