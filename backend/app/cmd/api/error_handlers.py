@@ -1,5 +1,4 @@
 import logging
-import traceback
 
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
@@ -70,12 +69,11 @@ def register_error_handlers(app: FastAPI) -> None:
         request: Request,
         exc: Exception,
     ) -> JSONResponse:
-        tb = "".join(traceback.format_exception(type(exc), exc, exc.__traceback__))
-        logger.error(
-            "Unexpected error on %s %s\n%s",
+        logger.exception(
+            "Unexpected error on %s %s",
             request.method,
             request.url.path,
-            tb,
+            exc_info=(type(exc), exc, exc.__traceback__),
         )
         return JSONResponse(
             status_code=500,
@@ -83,8 +81,5 @@ def register_error_handlers(app: FastAPI) -> None:
                 "message": "Internal server error.",
                 "method": request.method,
                 "path": request.url.path,
-                "error": exc.__class__.__name__,
-                "detail": str(exc),
-                "traceback": tb,
             },
         )
