@@ -11,10 +11,3 @@ def create_app( settings: Settings ):
     return app
 
 app = create_app(settings)
-uvicorn.run(
-    "app.cmd.web:app",
-    port=settings.APP_PORT,
-    host="0.0.0.0",
-    log_level="info",
-    reload=False
-)

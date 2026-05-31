@@ -5,10 +5,10 @@ from app.application.usecases.user_usecase import UserUsecase
 
 
 class AuthController:
-    def __init__(self, user_usecase:UserUsecase):
+    def __init__(self, user_usecase: UserUsecase):
         self.user_usecase = user_usecase
 
-    async def test(self)->str:
+    async def test(self) -> str:
         print("test")
         return "test"
     
@@ -17,10 +17,14 @@ class AuthController:
 
         # TODO: validation
 
-        self.user_usecase.register_user(name=request.name, email=request.email, password=request.password)
-
-        return CreateUserResponse(
+        user = self.user_usecase.register_user(
             name=request.name,
             email=request.email,
+            password=request.password,
         )
-    
+
+        return CreateUserResponse(
+            name=user.name,
+            email=user.email,
+            access_token=user.jwt,
+        )
