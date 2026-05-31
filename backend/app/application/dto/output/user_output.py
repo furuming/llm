@@ -1,6 +1,7 @@
 from pydantic import BaseModel, EmailStr
 
-class UserInput(BaseModel):
+class UserOutput(BaseModel):
+    id: str
     name: str
     email: EmailStr
-    password: str
+    jwt: str

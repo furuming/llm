@@ -1,5 +1,5 @@
 import bcrypt
-from app.infrastructure.adapters.security.hasher import Hasher
+from app.domain.contracts.security.hasher import Hasher
 
 
 class BcryptHasher(Hasher):
