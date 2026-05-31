@@ -1,16 +1,16 @@
 from datetime import datetime
-from uuid import uuid4
 
 from sqlalchemy import DateTime, String, Text, func
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.infrastructure.parsistance.sqlalchemy.core.base import Base
+from app.shared.ulid import generate_ulid
 
 
 class UserModel(Base):
     __tablename__ = "users"
 
-    id: Mapped[str] = mapped_column(String(26), primary_key=True, default=lambda: uuid4().hex[:26])
+    id: Mapped[str] = mapped_column(String(26), primary_key=True, default=generate_ulid)
     name: Mapped[str] = mapped_column(String(255), nullable=False)
     password: Mapped[str | None] = mapped_column(Text, nullable=True)
     email: Mapped[str] = mapped_column(String(255), nullable=False)
