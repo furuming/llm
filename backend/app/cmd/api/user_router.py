@@ -1,8 +1,8 @@
-from fastapi import APIRouter, Response
+from fastapi import APIRouter, Response, HTTPException
 
 from app.presentation.controllers.auth_controller import AuthController
-from app.presentation.schema.requests.user_request import CreateUserRequest
-from app.presentation.schema.responses.user_response import CreateUserResponse
+from app.presentation.schema.requests.user_request import CreateUserRequest, LoginRequest
+from app.presentation.schema.responses.user_response import CreateUserResponse, LoginResponse
 
 
 def create_user_router(auth_controller: AuthController) -> APIRouter:
@@ -17,7 +17,31 @@ def create_user_router(auth_controller: AuthController) -> APIRouter:
         request: CreateUserRequest,
         response: Response,
     ) -> CreateUserResponse:
-        result = await auth_controller.create(request)
+        
+        try:
+            result = await auth_controller.create(request)
+        except Exception:
+            raise HTTPException(status_code=400, detail="invalid request")
+        
+
+        response.set_cookie(
+            key="access_token",
+            value=result.access_token,
+            httponly=True,
+            secure=True,
+            samesite="lax",
+            max_age=3600,
+        )
+        return result
+    
+    @router.post("/login")
+    async def login( request: LoginRequest, response: Response )->LoginResponse:
+        try:
+            result = await auth_controller.login(request)
+
+        except Exception:
+            raise HTTPException(status_code=400, detail="invalid request")
+                    
         response.set_cookie(
             key="access_token",
             value=result.access_token,

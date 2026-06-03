@@ -1,5 +1,5 @@
-from app.presentation.schema.requests.user_request import CreateUserRequest
-from app.presentation.schema.responses.user_response import CreateUserResponse
+from app.presentation.schema.requests.user_request import CreateUserRequest, LoginRequest
+from app.presentation.schema.responses.user_response import CreateUserResponse, LoginResponse
 
 from app.application.usecases.user_usecase import UserUsecase
 
@@ -28,3 +28,19 @@ class AuthController:
             email=user.email,
             access_token=user.jwt,
         )
+    
+    async def login( self, request: LoginRequest ) -> LoginResponse:
+
+        # validate
+
+        result = self.user_usecase.login(
+            email = request.email,
+            password = request.password
+        )
+
+        return LoginResponse(
+            name = result.name,
+            email = result.email,
+            access_token = result.jwt            
+        )
+

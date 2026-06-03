@@ -1,6 +1,6 @@
 from app.domain.contracts.repository.user_contract import UserRepository
 from app.domain.contracts.security.hasher import Hasher
-from app.domain.exception import (UserAlreadyExistsError)
+from app.domain.exception import (UserAlreadyExistsError, UserNotFoundError, InvalidPasswordError)
 from app.domain.entities.user import User
 
 class UserService:
@@ -19,6 +19,18 @@ class UserService:
         user = self.user_repository.save(
             User(id=None, name=name, email=email, password=hashed_password)
         )
+        return user
+
+    def login( self, email: str,  password: str )->User:
+
+        user = self.user_repository.find_by_email(email)
+
+        if user is None:
+            raise UserNotFoundError
+        
+        if not self.hasher.verify(password, user.password):
+            raise InvalidPasswordError
+
         return user
 
         
