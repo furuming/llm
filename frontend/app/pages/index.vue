@@ -1,5 +1,21 @@
 <script lang="ts" setup>
 
+const email = ref("")
+const password = ref("")
+
+
+const login = async () => {
+    const ret = await $fetch("/api/login", {
+        method: "POST",
+        body: {
+            email: email.value,
+            password: password.value,
+        }
+    })
+    console.log(ret)
+
+}
+
 </script>
 
 
@@ -11,16 +27,16 @@
       </v-card-title>
 
       <v-card-text>
-        <v-text-field label="ID">
+        <v-text-field label="email" v-model="email">
         </v-text-field>
-        <v-text-field label="password" type="password">
+        <v-text-field label="password" type="password" v-model="password">
         </v-text-field>
 
         <v-row>
             <v-col>
                 <v-btn to="/register">新規登録</v-btn>
             </v-col>
-            <v-col class="text-right">
+            <v-col class="text-right" @click="login">
                 <v-btn>ログイン</v-btn>
             </v-col>
         </v-row>
