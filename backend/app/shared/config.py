@@ -8,6 +8,8 @@ class Settings(BaseSettings):
         env_file_encoding="utf-8",
     )
     APP_PORT: int = 9000
+    APP_KEY: str = ""
+    APP_ALGORISM:str = "HS256"
 
     DB_HOST:str = "db"
     DB_USER: str = "root"

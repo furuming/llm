@@ -10,8 +10,10 @@ class UserUsecase:
         
         user:User = self.user_service.register( name, email, password )
 
-        # TODO: jwt発行
-        jwt = "todo"
+        if user.id is None:
+            raise Exception
+
+        jwt = self.user_service.issueJWT(user.id)
 
         
         return UserOutput(
@@ -25,9 +27,12 @@ class UserUsecase:
 
         user: User = self.user_service.login(email, password)
 
-        # TODO: jwt発行
-        jwt = "todo"
 
+        if user.id is None:
+            raise Exception
+        
+        jwt = self.user_service.issueJWT(user.id)
+        
         return UserOutput(
             id = user.id,
             email = user.email,
