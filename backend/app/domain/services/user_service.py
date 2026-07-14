@@ -15,7 +15,8 @@ class UserService:
     def register(self, name, email, password)->User:
 
         user = self.user_repository.find_by_email(email)
-        if user is not None:
+        if user is not None:            
+            print("UserAlreadyExistsError")
             raise UserAlreadyExistsError
 
         hashed_password = self.hasher.hash(password)
@@ -33,9 +34,11 @@ class UserService:
         user = self.user_repository.find_by_email(email)
 
         if user is None:
+            print("UserNotFoundError")
             raise UserNotFoundError
         
         if not self.hasher.verify(password, user.password):
+            print("InvalidPasswordError")
             raise InvalidPasswordError
 
         return user
@@ -45,8 +48,15 @@ class UserService:
 
         expired_at: datetime = datetime.now(timezone.utc) + timedelta(hours=2)
 
-        jwt = self.tokener.encode({"user_id":user_id, "expired_at":expired_at})
+        jwt = self.tokener.encode({
+            "user_id": user_id,
+            "exp": int(expired_at.timestamp())
+        })
         return jwt
 
+    def decodeJWT( self, token )->str:
+
+        decoded = self.tokener.decode(token)
+        return decoded.get("user_id")
 
         
