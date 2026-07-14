@@ -39,6 +39,12 @@ def register_error_handlers(app: FastAPI) -> None:
         request: Request,
         exc: HTTPException,
     ) -> JSONResponse:
+        logger.warning(
+            "HTTP error on %s %s: %s",
+            request.method,
+            request.url.path,
+            exc.detail,
+        )
         return JSONResponse(
             status_code=exc.status_code,
             content={

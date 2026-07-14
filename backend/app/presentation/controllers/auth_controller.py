@@ -8,8 +8,11 @@ class AuthController:
     def __init__(self, user_usecase: UserUsecase):
         self.user_usecase = user_usecase
 
-    async def test(self) -> str:
-        print("test")
+    async def get_user_by_token(self, token) -> str:
+        print("get_user_by_token")
+
+        self.user_usecase.get_user_by_token(token)
+
         return "test"
     
     async def create(self, request: CreateUserRequest) -> CreateUserResponse:

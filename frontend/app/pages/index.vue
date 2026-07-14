@@ -2,6 +2,15 @@
 
 const email = ref("")
 const password = ref("")
+const auth = useAuth()
+
+onMounted( async () => {
+  const user = await $fetch("/api/auth/get_user")
+  console.log(user)
+  if (user){
+    auth.set(user)
+  } 
+})
 
 
 const login = async () => {
@@ -13,7 +22,6 @@ const login = async () => {
         }
     })
     console.log(ret)
-
 }
 
 </script>
