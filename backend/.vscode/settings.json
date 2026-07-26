@@ -1,0 +1,18 @@
+
+{
+
+    "files.autoSave": "onFocusChange",
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "explicit",       // Lintエラーの自動修正
+        "source.organizeImports": "explicit" // インポート文の自動整理
+    },
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.formatOnSave": true
+    },
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.indexing": true,
+    "cSpell.words": [
+        "Tokener"
+    ]
+}
