@@ -2,26 +2,24 @@
 
 const email = ref("")
 const password = ref("")
-const auth = useAuth()
-
-onMounted( async () => {
-  const user = await $fetch("/api/auth/get_user")
-  console.log(user)
-  if (user){
-    auth.set(user)
-  } 
-})
 
 
 const login = async () => {
-    const ret = await $fetch("/api/login", {
-        method: "POST",
-        body: {
-            email: email.value,
-            password: password.value,
-        }
-    })
-    console.log(ret)
+    
+    try{
+
+        const ret = await $fetch("/api/login", {
+            method: "POST",
+            body: {
+                email: email.value,
+                password: password.value,
+            }
+        })
+        await navigateTo("/")
+    } catch( e ){
+        alert(e)
+    }
+
 }
 
 </script>
