@@ -19,5 +19,7 @@ export default defineNuxtConfig({
         transformAssetUrls,
       },
     },
-  },
+  },imports: {
+    dirs: ['app/types/**']
+  }
 })

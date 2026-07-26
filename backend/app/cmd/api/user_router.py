@@ -13,7 +13,7 @@ def create_user_router(container: Container) -> APIRouter:
 
     ACCESS_TOKEN = "access_token"
 
-    @router.get("/auth/get_user")
+    @router.get("/auth/get-user")
     async def get_user(request: Request, response: Response):
 
         user_id = request.state.user_id
