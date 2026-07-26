@@ -1,13 +1,10 @@
-import logging
-
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException
 
 from app.domain.exception import UserAlreadyExistsError
-
-logger = logging.getLogger("uvicorn.error")
+from app.infrastructure.logger.logger import logger
 
 
 def register_error_handlers(app: FastAPI) -> None:
@@ -16,7 +13,6 @@ def register_error_handlers(app: FastAPI) -> None:
         request: Request,
         exc: RequestValidationError,
     ) -> JSONResponse:
-        body = await request.body()
         logger.warning(
             "Validation error on %s %s: %s",
             request.method,
@@ -30,7 +26,6 @@ def register_error_handlers(app: FastAPI) -> None:
                 "method": request.method,
                 "path": request.url.path,
                 "errors": exc.errors(),
-                "body": body.decode(errors="replace"),
             },
         )
 

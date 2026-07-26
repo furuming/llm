@@ -1,11 +1,11 @@
 from app.application.usecases.user_usecase import UserUsecase
-from app.domain.entities.user import User
 from app.infrastructure.logger.logger import logger
 from app.presentation.schema.requests.user_request import (
     CreateUserRequest,
     LoginRequest,
 )
 from app.presentation.schema.responses.user_response import (
+    AuthenticatedUserResponse,
     CreateUserResponse,
     LoginResponse,
 )
@@ -15,7 +15,9 @@ class AuthController:
     def __init__(self, user_usecase: UserUsecase):
         self.user_usecase = user_usecase
 
-    async def get_authenticated_user(self, user_id: str) -> User:
+    async def get_authenticated_user(
+        self, user_id: str
+    ) -> AuthenticatedUserResponse:
         logger.info("Get authenticated user request received user_id=%s", user_id)
         try:
             user = self.user_usecase.get_user_by_id(user_id)
@@ -25,7 +27,14 @@ class AuthController:
             )
             raise
         logger.info("Get authenticated user request completed user_id=%s", user_id)
-        return user
+        if user.id is None:
+            logger.error("Get authenticated user failed: user id is missing")
+            raise ValueError("user id is missing")
+        return AuthenticatedUserResponse(
+            id=user.id,
+            name=user.name,
+            email=user.email,
+        )
 
     async def create(self, request: CreateUserRequest) -> CreateUserResponse:
         logger.info("Register request received email=%s", request.email)
