@@ -15,11 +15,11 @@ from app.shared.config import Settings
 
 class Container:
     def __init__(self, settings: Settings):
-
         db_session = create_session_factory(settings.db_url)
         hasher = BcryptHasher()
         tokener = PyJwtTokener(
-            secret_key=settings.APP_KEY, algorism=settings.APP_ALGORISM
+            secret_key=settings.APP_KEY,
+            algorism=settings.APP_ALGORISM,
         )
 
         ur = SQLAlchemyUserRepository(session=db_session)

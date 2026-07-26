@@ -39,3 +39,6 @@ def get_logger(settings: Settings, name: str = "app") -> logging.Logger:
     logger.addHandler(handler)
 
     return logger
+
+
+logger = get_logger(Settings())
