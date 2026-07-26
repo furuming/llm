@@ -78,3 +78,35 @@ def test_get_logger_does_not_duplicate_file_handler(
 def test_get_logger_raises_value_error_for_invalid_log_level() -> None:
     with pytest.raises(ValueError, match="Invalid LOG_LEVEL: UNKNOWN"):
         logger_module.get_logger(Settings(LOG_LEVEL="UNKNOWN"), _logger_name())
+
+
+def test_logger_switches_file_when_date_changes(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    real_datetime = datetime
+
+    class MutableDatetime:
+        current = real_datetime(2026, 7, 26, 23, 59, 59)
+
+        @classmethod
+        def now(cls) -> datetime:
+            return cls.current
+
+    monkeypatch.setattr(logger_module, "LOG_DIRECTORY", tmp_path)
+    monkeypatch.setattr(logger_module, "datetime", MutableDatetime)
+    logger = logger_module.get_logger(Settings(), _logger_name())
+
+    try:
+        logger.info("before midnight")
+        MutableDatetime.current = real_datetime(2026, 7, 27, 0, 0, 1)
+        logger.info("after midnight")
+        for handler in logger.handlers:
+            handler.flush()
+
+        previous_file = tmp_path / "2026_07_26_app.log"
+        current_file = tmp_path / "2026_07_27_app.log"
+        assert "before midnight" in previous_file.read_text(encoding="utf-8")
+        assert "after midnight" not in previous_file.read_text(encoding="utf-8")
+        assert "after midnight" in current_file.read_text(encoding="utf-8")
+    finally:
+        _close_handlers(logger)
