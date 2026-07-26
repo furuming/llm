@@ -21,8 +21,8 @@ RUN apt-get update \
         --create-home \
         --shell /bin/bash \
         app \
-    && mkdir -p /storage/logs \
-    && chown -R app:app /app /storage \
+    && mkdir -p app/storage/logs \
+    && chown -R app:app /app \
     && rm -rf /var/lib/apt/lists/*
 
 ENV PATH="/home/app/.local/bin:/app/.venv/bin:${PATH}"
