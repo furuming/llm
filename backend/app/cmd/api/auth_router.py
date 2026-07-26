@@ -32,9 +32,10 @@ def create_auth_router(container: Container) -> APIRouter:
             key=ACCESS_TOKEN,
             value=result.access_token,
             httponly=True,
-            secure=True,
+            secure=False,
             samesite="lax",
             max_age=3600,
+            path="/",
         )
         return result
 
@@ -51,9 +52,10 @@ def create_auth_router(container: Container) -> APIRouter:
             key=ACCESS_TOKEN,
             value=result.access_token,
             httponly=True,
-            secure=True,
+            secure=False,
             samesite="lax",
             max_age=3600,
+            path="/",
         )
         return result
 
