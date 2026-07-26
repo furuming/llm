@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 from typing import Any
 
-class Tokener(ABC):
 
+class TokenerContract(ABC):
     @abstractmethod
     def encode(
         self,
@@ -11,12 +11,10 @@ class Tokener(ABC):
         """payloadからトークン文字列を発行する"""
         raise NotImplementedError
 
-
     @abstractmethod
     def decode(
         self,
         token: str,
-    ) -> dict[str, Any]:
+    ) -> dict[str, str]:
         """トークン文字列を検証し、payloadを返す"""
         raise NotImplementedError
-

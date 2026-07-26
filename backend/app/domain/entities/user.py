@@ -6,5 +6,4 @@ class User:
     id: str | None
     email: str
     name: str
-    password: str
-    
+    password: str | None = None

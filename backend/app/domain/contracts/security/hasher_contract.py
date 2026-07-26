@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-class Hasher(ABC):
+class HasherContract(ABC):
 
     @abstractmethod
     def hash(self, text:str)->str:
