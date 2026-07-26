@@ -22,6 +22,7 @@ def _close_handlers(logger: logging.Logger) -> None:
 def test_get_logger_writes_to_dated_log_file(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
+    """loggerが日付付きログファイルへメッセージを書き込むことを確認する。"""
     monkeypatch.setattr(logger_module, "LOG_DIRECTORY", tmp_path)
     logger = logger_module.get_logger(Settings(LOG_LEVEL="INFO"), _logger_name())
 
@@ -41,6 +42,7 @@ def test_get_logger_writes_to_dated_log_file(
 def test_get_logger_uses_log_level_from_settings(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
+    """設定したログレベル未満のメッセージが出力されないことを確認する。"""
     monkeypatch.setattr(logger_module, "LOG_DIRECTORY", tmp_path)
     logger = logger_module.get_logger(Settings(LOG_LEVEL="ERROR"), _logger_name())
 
@@ -61,6 +63,7 @@ def test_get_logger_uses_log_level_from_settings(
 def test_get_logger_does_not_duplicate_file_handler(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
+    """同じloggerを再取得してもファイルハンドラーが重複しないことを確認する。"""
     monkeypatch.setattr(logger_module, "LOG_DIRECTORY", tmp_path)
     name = _logger_name()
     logger = logger_module.get_logger(Settings(), name)
@@ -76,6 +79,7 @@ def test_get_logger_does_not_duplicate_file_handler(
 
 
 def test_get_logger_raises_value_error_for_invalid_log_level() -> None:
+    """不正なログレベルを指定した場合に設定エラーになることを確認する。"""
     with pytest.raises(ValueError, match="Invalid LOG_LEVEL: UNKNOWN"):
         logger_module.get_logger(Settings(LOG_LEVEL="UNKNOWN"), _logger_name())
 
@@ -83,6 +87,7 @@ def test_get_logger_raises_value_error_for_invalid_log_level() -> None:
 def test_logger_switches_file_when_date_changes(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
+    """日付が変わった際に出力先が新しい日付のログファイルへ切り替わることを確認する。"""
     real_datetime = datetime
 
     class MutableDatetime:

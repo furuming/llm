@@ -18,6 +18,7 @@ class DummyTokener:
 
 
 def test_decode_jwt_raises_when_user_id_claim_is_missing():
+    """JWTにuser_idクレームがない場合に認証エラーになることを確認する。"""
     service = AuthService(DummyTokener(payload={"exp": 123456}))
 
     with pytest.raises(ValueError, match="user_id"):
@@ -25,6 +26,7 @@ def test_decode_jwt_raises_when_user_id_claim_is_missing():
 
 
 def test_decode_jwt_raises_when_token_is_invalid():
+    """不正なJWTのデコードエラーが呼び出し元へ伝播することを確認する。"""
     service = AuthService(DummyTokener(error=ValueError("invalid token")))
 
     with pytest.raises(ValueError, match="invalid token"):
