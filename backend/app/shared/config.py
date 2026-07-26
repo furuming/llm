@@ -1,4 +1,4 @@
-from pydantic_settings import BaseSettings,SettingsConfigDict
+from pydantic_settings import BaseSettings, SettingsConfigDict
 from urllib.parse import quote_plus
 
 # 設定モデルを定義
@@ -9,9 +9,10 @@ class Settings(BaseSettings):
     )
     APP_PORT: int = 9000
     APP_KEY: str = ""
-    APP_ALGORISM:str = "HS256"
+    APP_ALGORISM: str = "HS256"
+    LOG_LEVEL: str = "INFO"
 
-    DB_HOST:str = "db"
+    DB_HOST: str = "db"
     DB_USER: str = "root"
     DB_PASSWORD: str = ""
     DB_PORT: int = 3306
