@@ -3,6 +3,7 @@ from urllib.parse import quote_plus
 from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+
 # 設定モデルを定義
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
@@ -10,7 +11,7 @@ class Settings(BaseSettings):
         env_file_encoding="utf-8",
     )
     APP_PORT: int = 9000
-    APP_KEY: str
+    APP_KEY: str = "dummy"
     APP_ALGORISM: str = "HS256"
     LOG_LEVEL: str = "INFO"
 
@@ -31,4 +32,6 @@ class Settings(BaseSettings):
     def db_url(self) -> str:
         user = quote_plus(self.DB_USER)
         pwd = quote_plus(self.DB_PASSWORD)
-        return f"mysql+pymysql://{user}:{pwd}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
+        return (
+            f"mysql+pymysql://{user}:{pwd}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
+        )

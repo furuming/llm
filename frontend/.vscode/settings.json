@@ -1,0 +1,15 @@
+{
+    "eslint.useFlatConfig": true,
+    "eslint.nodePath": "./node_modules",
+    "eslint.workingDirectories": [
+        {"mode":"auto"}
+    ],  
+    "[vue]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+      },
+    "eslint.run": "onType",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit"
+    }
+}

@@ -1,0 +1,61 @@
+2026-08-01 04:31:19 ERROR [app] Authentication failed: access token is missing
+2026-08-01 04:31:19 WARNING [app] HTTP error on GET /auth/get-user: authentication error
+2026-08-01 04:31:34 INFO [app] Login request received email=test2@localhost.com
+2026-08-01 04:31:34 INFO [app] Finding user by email email=test2@localhost.com
+2026-08-01 04:31:34 INFO [app] User not found by email email=test2@localhost.com
+2026-08-01 04:31:34 ERROR [app] Login request failed email=test2@localhost.com
+Traceback (most recent call last):
+  File "/app/app/presentation/controllers/auth_controller.py", line 61, in login
+    result = self.user_usecase.login(
+        email=request.email, password=request.password
+    )
+  File "/app/app/application/usecases/user_usecase.py", line 28, in login
+    user: User = self.user_service.login(email, password)
+                 ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/app/app/domain/services/user_service.py", line 55, in login
+    raise UserNotFoundError
+app.domain.exception.UserNotFoundError
+2026-08-01 04:31:34 WARNING [app] HTTP error on POST /login: Login failed: 
+2026-08-01 04:31:39 INFO [app] Login request received email=test2@test.com
+2026-08-01 04:31:39 INFO [app] Finding user by email email=test2@test.com
+2026-08-01 04:31:39 INFO [app] Found user by email user_id=01KYE9PGCRYPWYA4KTD7S5W1JW
+2026-08-01 04:31:39 INFO [app] Verifying password
+2026-08-01 04:31:39 INFO [app] Password verification completed
+2026-08-01 04:31:39 INFO [app] Encoding JWT
+2026-08-01 04:31:39 INFO [app] JWT encoded
+2026-08-01 04:31:39 INFO [app] Login request completed user_id=01KYE9PGCRYPWYA4KTD7S5W1JW
+2026-08-01 04:31:39 INFO [app] Decoding JWT
+2026-08-01 04:31:39 INFO [app] JWT decoded
+2026-08-01 04:31:39 INFO [app] Authentication completed user_id=01KYE9PGCRYPWYA4KTD7S5W1JW
+2026-08-01 04:31:39 INFO [app] Get authenticated user request received user_id=01KYE9PGCRYPWYA4KTD7S5W1JW
+2026-08-01 04:31:39 INFO [app] Finding user by id user_id=01KYE9PGCRYPWYA4KTD7S5W1JW
+2026-08-01 04:31:39 INFO [app] Found user by id user_id=01KYE9PGCRYPWYA4KTD7S5W1JW
+2026-08-01 04:31:39 INFO [app] Get authenticated user request completed user_id=01KYE9PGCRYPWYA4KTD7S5W1JW
+2026-08-01 04:32:15 INFO [app] Decoding JWT
+2026-08-01 04:32:15 INFO [app] JWT decoded
+2026-08-01 04:32:15 INFO [app] Authentication completed user_id=01KYE9PGCRYPWYA4KTD7S5W1JW
+2026-08-01 04:32:15 INFO [app] Get authenticated user request received user_id=01KYE9PGCRYPWYA4KTD7S5W1JW
+2026-08-01 04:32:15 INFO [app] Finding user by id user_id=01KYE9PGCRYPWYA4KTD7S5W1JW
+2026-08-01 04:32:15 INFO [app] Found user by id user_id=01KYE9PGCRYPWYA4KTD7S5W1JW
+2026-08-01 04:32:15 INFO [app] Get authenticated user request completed user_id=01KYE9PGCRYPWYA4KTD7S5W1JW
+2026-08-01 04:32:20 INFO [app] Decoding JWT
+2026-08-01 04:32:20 INFO [app] JWT decoded
+2026-08-01 04:32:20 INFO [app] Authentication completed user_id=01KYE9PGCRYPWYA4KTD7S5W1JW
+2026-08-01 04:32:20 INFO [app] Get authenticated user request received user_id=01KYE9PGCRYPWYA4KTD7S5W1JW
+2026-08-01 04:32:20 INFO [app] Finding user by id user_id=01KYE9PGCRYPWYA4KTD7S5W1JW
+2026-08-01 04:32:20 INFO [app] Found user by id user_id=01KYE9PGCRYPWYA4KTD7S5W1JW
+2026-08-01 04:32:20 INFO [app] Get authenticated user request completed user_id=01KYE9PGCRYPWYA4KTD7S5W1JW
+2026-08-01 04:35:18 INFO [app] Decoding JWT
+2026-08-01 04:35:18 INFO [app] JWT decoded
+2026-08-01 04:35:18 INFO [app] Authentication completed user_id=01KYE9PGCRYPWYA4KTD7S5W1JW
+2026-08-01 04:35:18 INFO [app] Get authenticated user request received user_id=01KYE9PGCRYPWYA4KTD7S5W1JW
+2026-08-01 04:35:18 INFO [app] Finding user by id user_id=01KYE9PGCRYPWYA4KTD7S5W1JW
+2026-08-01 04:35:18 INFO [app] Found user by id user_id=01KYE9PGCRYPWYA4KTD7S5W1JW
+2026-08-01 04:35:18 INFO [app] Get authenticated user request completed user_id=01KYE9PGCRYPWYA4KTD7S5W1JW
+2026-08-01 04:35:25 INFO [app] Decoding JWT
+2026-08-01 04:35:25 INFO [app] JWT decoded
+2026-08-01 04:35:25 INFO [app] Authentication completed user_id=01KYE9PGCRYPWYA4KTD7S5W1JW
+2026-08-01 04:35:25 INFO [app] Get authenticated user request received user_id=01KYE9PGCRYPWYA4KTD7S5W1JW
+2026-08-01 04:35:25 INFO [app] Finding user by id user_id=01KYE9PGCRYPWYA4KTD7S5W1JW
+2026-08-01 04:35:25 INFO [app] Found user by id user_id=01KYE9PGCRYPWYA4KTD7S5W1JW
+2026-08-01 04:35:25 INFO [app] Get authenticated user request completed user_id=01KYE9PGCRYPWYA4KTD7S5W1JW
