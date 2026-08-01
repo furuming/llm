@@ -1,5 +1,8 @@
 <script lang="ts" setup>
 
+definePageMeta({
+  layout: 'guest',
+})
 const email = ref("")
 const password = ref("")
 

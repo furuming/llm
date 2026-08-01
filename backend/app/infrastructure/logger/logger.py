@@ -4,7 +4,7 @@ from pathlib import Path
 
 from app.shared.config import Settings
 
-LOG_DIRECTORY = Path("/storage/logs")
+LOG_DIRECTORY = Path("storage/logs")
 LOG_FORMAT = "%(asctime)s %(levelname)s [%(name)s] %(message)s"
 DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
 
@@ -57,10 +57,7 @@ def get_logger(settings: Settings, name: str = "app") -> logging.Logger:
 
     # 同じ logger を再取得した場合のログ重複を防ぐ。
     for handler in logger.handlers:
-        if (
-            isinstance(handler, DailyFileHandler)
-            and handler.directory == log_directory
-        ):
+        if isinstance(handler, DailyFileHandler) and handler.directory == log_directory:
             handler.ensure_current_file()
             handler.setLevel(level)
             return logger
