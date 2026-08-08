@@ -15,6 +15,7 @@ class ChatSessionModel(Base):
 
     id: Mapped[str] = mapped_column(String(26), primary_key=True)
     title: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    user_id: Mapped[str] = mapped_column(String(26), nullable=False)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )
@@ -32,6 +33,7 @@ class ChatSessionModel(Base):
         return ChatSessionEntity(
             id=self.id,
             title=self.title,
+            user_id=self.user_id,
             messages=[message.to_entity() for message in self.messages],
             created_at=self.created_at,
             updated_at=self.updated_at,

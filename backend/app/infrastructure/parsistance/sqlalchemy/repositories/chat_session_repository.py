@@ -18,7 +18,11 @@ class SqlAlchemyChatSessionRepository(ChatSessionContract):
         logger.info("Creating chat session")
         try:
             with self.session_maker() as session:
-                model = ChatSessionModel()
+                model = ChatSessionModel(
+                    id=entity.id,
+                    title=entity.title,
+                    user_id=entity.user_id,
+                )
                 session.add(model)
                 session.commit()
                 session.refresh(model)
@@ -32,11 +36,7 @@ class SqlAlchemyChatSessionRepository(ChatSessionContract):
         logger.info("Getting chat session by session id")
         try:
             with self.session_maker() as session:
-                model = (
-                    session.query(ChatSessionModel)
-                    .filter_by(session_id=session_id)
-                    .first()
-                )
+                model = session.query(ChatSessionModel).filter_by(id=session_id).first()
                 if model is None:
                     raise ChatSessionNotFoundError(
                         f"Chat session not found: {session_id}"

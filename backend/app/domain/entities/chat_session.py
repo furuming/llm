@@ -8,6 +8,7 @@ from app.domain.entities.chat_message import ChatMessageEntity
 class ChatSessionEntity:
     id: str
     title: str | None
+    user_id: str
     messages: list[ChatMessageEntity]
     created_at: datetime
     updated_at: datetime

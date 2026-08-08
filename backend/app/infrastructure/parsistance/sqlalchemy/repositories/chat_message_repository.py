@@ -19,12 +19,17 @@ class SqlAlchemyChatMessageRepository(ChatMessageContract):
 
         try:
             with self.session_maker() as session:
-                model = ChatMessageModel()
+                model = ChatMessageModel(
+                    id=message.id,
+                    session_id=message.session_id,
+                    role=message.role,
+                    content=message.content,
+                )
                 session.add(model)
                 session.commit()
                 session.refresh(model)
         except Exception:
-            logger.exception("Failed to create chat session")
+            logger.exception("Failed to create chat message")
             raise
 
         return model.to_entity()
