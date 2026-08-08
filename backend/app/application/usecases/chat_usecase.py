@@ -39,11 +39,6 @@ class ChatUsecase:
         self.user_service.find_by_id(user_id)
         return self.chat_service.get_chat_sessions(user_id)
 
-    def get_chat_sessions(self, user_id: str) -> list[ChatSessionEntity]:
-        """チャットセッション一覧取得"""
-        self.user_service.find_by_id(user_id)
-        return self.chat_service.get_chat_sessions(user_id)
-
     def get_chat_messages(
         self, user_id: str, session_id: str
     ) -> list[ChatMessageEntity]:
@@ -56,10 +51,7 @@ class ChatUsecase:
         self, user_id: str, session_id: str, content: str
     ) -> ChatMessageEntity:
         """メッセージ送信"""
-        # user取得
-        user = self.user_service.find_by_id(user_id)
-
-        # session取得
+        self.user_service.find_by_id(user_id)
         session = self.chat_service.get_chat_session(session_id=session_id)
 
         ulid = generate_ulid()
@@ -72,4 +64,9 @@ class ChatUsecase:
             updated_at=datetime.now(),
         )
 
-        return self.chat_service.register_chat_message(message)
+        persisted_message = self.chat_service.create_chat_message(message)
+        response_message = self.chat_service.forward_chat_message(persisted_message)
+        if response_message is not None:
+            self.chat_service.create_chat_message(response_message)
+
+        return persisted_message

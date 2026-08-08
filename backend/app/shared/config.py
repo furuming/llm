@@ -20,6 +20,7 @@ class Settings(BaseSettings):
     DB_PASSWORD: str = ""
     DB_PORT: int = 3306
     DB_NAME: str = "llm"
+    LLM_SERVER_HOST: str = ""
 
     @field_validator("APP_KEY")
     @classmethod

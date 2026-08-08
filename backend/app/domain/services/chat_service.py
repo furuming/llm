@@ -1,3 +1,6 @@
+from app.domain.contracts.gateway.message_forwarder_contract import (
+    MessageForwarderContract,
+)
 from app.domain.contracts.repository.chat_message_contract import ChatMessageContract
 from app.domain.contracts.repository.chat_session_contract import ChatSessionContract
 from app.domain.entities.chat_message import ChatMessageEntity
@@ -6,11 +9,15 @@ from app.domain.entities.chat_session import ChatSessionEntity
 
 class ChatService:
     def __init__(
-        self, chat_session: ChatSessionContract, chat_message: ChatMessageContract
+        self,
+        chat_session: ChatSessionContract,
+        chat_message: ChatMessageContract,
+        message_forwarder: MessageForwarderContract,
     ):
         """初期化"""
         self.chat_session = chat_session
         self.chat_message = chat_message
+        self.message_forwarder = message_forwarder
 
     def create_chat_session(self, entity: ChatSessionEntity) -> ChatSessionEntity:
         """チャットセッション作成"""
@@ -24,9 +31,15 @@ class ChatService:
         """チャットセッション一覧取得"""
         return self.chat_session.get_all(user_id)
 
-    def register_chat_message(self, message: ChatMessageEntity):
-        """チャットメッセージ登録"""
+    def create_chat_message(self, message: ChatMessageEntity) -> ChatMessageEntity:
+        """チャットメッセージ保存"""
         return self.chat_message.create(message)
+
+    def forward_chat_message(
+        self, message: ChatMessageEntity
+    ) -> ChatMessageEntity | None:
+        """LLMへメッセージを転送"""
+        return self.message_forwarder.forward(message)
 
     def get_chat_messages(
         self, chat_session: ChatSessionEntity
