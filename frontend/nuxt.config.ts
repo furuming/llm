@@ -20,6 +20,9 @@ export default defineNuxtConfig({
       },
     },
   },imports: {
-    dirs: ['app/types/**']
+    dirs: [
+      'app/types/**', 
+      'app/composables/**'
+    ]
   }
 })
