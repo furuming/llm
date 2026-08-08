@@ -24,6 +24,7 @@ def upgrade() -> None:
         "chat_sessions",
         sa.Column("id", sa.String(length=26), primary_key=True),
         sa.Column("title", sa.String(length=255), nullable=True),
+        sa.Column("user_id", sa.String(length=26), nullable=False),
         sa.Column(
             "created_at",
             sa.DateTime(timezone=True),
@@ -56,7 +57,6 @@ def upgrade() -> None:
             server_default=sa.text("CURRENT_TIMESTAMP"),
             nullable=False,
         ),
-
     )
 
     op.create_index("ix_chat_sessions_created_at", "chat_sessions", ["created_at"])

@@ -2,7 +2,8 @@ from sqlalchemy.orm import Session, sessionmaker
 
 from app.domain.contracts.repository.chat_session_contract import ChatSessionContract
 from app.domain.entities.chat_session import ChatSessionEntity
-from app.infrastructure.logger import logger
+from app.domain.exception import ChatSessionNotFoundError
+from app.infrastructure.logger.logger import logger
 from app.infrastructure.parsistance.sqlalchemy.models.chat_session_model import (
     ChatSessionModel,
 )
@@ -37,7 +38,9 @@ class SqlAlchemyChatSessionRepository(ChatSessionContract):
                     .first()
                 )
                 if model is None:
-                    raise ValueError(f"Chat session not found: {session_id}")
+                    raise ChatSessionNotFoundError(
+                        f"Chat session not found: {session_id}"
+                    )
                 return model.to_entity()
         except Exception:
             logger.exception("Failed to get chat session")

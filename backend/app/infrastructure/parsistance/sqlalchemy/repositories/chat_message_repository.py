@@ -2,7 +2,8 @@ from sqlalchemy.orm import Session, sessionmaker
 
 from app.domain.contracts.repository.chat_message_contract import ChatMessageContract
 from app.domain.entities.chat_message import ChatMessageEntity
-from app.infrastructure.logger import logger
+from app.domain.exception import ChatMessageNotFoundError
+from app.infrastructure.logger.logger import logger
 from app.infrastructure.parsistance.sqlalchemy.models.chat_message_model import (
     ChatMessageModel,
 )

@@ -27,6 +27,19 @@ class InvalidPasswordError(DomainError):
     pass
 
 
+# chat系
+class ChatSessionNotFoundError(DomainError):
+    """チャットセッションが見つからない"""
+
+    pass
+
+
+class ChatMessageNotFoundError(DomainError):
+    """チャットメッセージが見つからない"""
+
+    pass
+
+
 # Contract系
 
 
