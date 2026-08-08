@@ -13,6 +13,7 @@
     "python.analysis.autoImportCompletions": true,
     "python.analysis.indexing": true,
     "cSpell.words": [
-        "Tokener"
+        "Tokener",
+        "Usecase"
     ]
 }
